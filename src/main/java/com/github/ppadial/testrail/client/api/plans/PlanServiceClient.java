@@ -91,7 +91,7 @@ public final class PlanServiceClient extends TestRailServiceBase {
    * Get all test plans of a project with a filter.
    *
    * @param projectId project identifier
-   * @param filters filters to apply
+   * @param filters filters to apply. See possible parameters: {@code = http://docs.gurock.com/testrail-api2/reference-plans#get_plans}
    * @return list of test plans from the specified project that meets the filter
    * @throws TestRailException An error in the connection with testrail
    * @since 0.1.0
@@ -110,7 +110,7 @@ public final class PlanServiceClient extends TestRailServiceBase {
     }
 
     // Do the query
-    apiResponse = get("get_plans/" + projectId);
+    apiResponse = get(url);
 
     Map<HttpStatusCode, TestRailException> choices =
         new HashMap<HttpStatusCode, TestRailException>() {
