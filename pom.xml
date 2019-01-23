@@ -30,9 +30,9 @@
     <version>2</version>
   </parent>
 
-  <groupId>com.github.ppadial</groupId>
+  <groupId>com.thomascook</groupId>
   <artifactId>testrail-api-client</artifactId>
-  <version>0.4.2-SNAPSHOT</version>
+  <version>0.4.2</version>
 
   <name>Testrail api client for Java</name>
   <description>A testrail API client for java projects</description>
