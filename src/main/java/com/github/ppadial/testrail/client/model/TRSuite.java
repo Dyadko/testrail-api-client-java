@@ -47,7 +47,7 @@ public final class TRSuite {
    * The unique ID of the test suite.
    */
   @JsonProperty("id")
-  public int id;
+  public Integer id;
   /**
    * True if the test suite is a baseline test suite and false otherwise (added with TestRail 4.0).
    */

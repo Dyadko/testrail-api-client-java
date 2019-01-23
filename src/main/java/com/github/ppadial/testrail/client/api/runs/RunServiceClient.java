@@ -23,15 +23,18 @@
 
 package com.github.ppadial.testrail.client.api.runs;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.ppadial.testrail.client.HttpStatusCode;
 import com.github.ppadial.testrail.client.TestRailException;
 import com.github.ppadial.testrail.client.api.NoAccessToProjectException;
 import com.github.ppadial.testrail.client.api.TestRailServiceBase;
-import com.github.ppadial.testrail.client.apiClient.ApiCallException;
+import com.github.ppadial.testrail.client.api.projects.InvalidOrUnknownProjectException;
 import com.github.ppadial.testrail.client.apiClient.ApiClient;
 import com.github.ppadial.testrail.client.apiClient.ApiResponse;
 import com.github.ppadial.testrail.client.model.TRRun;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,34 +46,80 @@ import java.util.Map;
  */
 public final class RunServiceClient extends TestRailServiceBase {
 
-  public RunServiceClient(final ApiClient apiClient) {
-    super(apiClient);
-  }
+    public static final String MILESTONE_ID = "milestone_id";
 
-  /**
-   * Returns an existing test run. Please see get_tests for the list of included tests in this run.
-   *
-   * @param runId The ID of the test run
-   * @return test run
-   * @throws TestRailException An error in the connection with testrail
-   * @since 0.1.0
-   */
-  public final TRRun getRun(final int runId)
-      throws TestRailException {
-    final ApiResponse apiResponse;
-    final TRRun responseObjectModel;
+    public RunServiceClient(final ApiClient apiClient) {
+        super(apiClient);
+    }
 
-    // Do the query
-    apiResponse = get("get_run/" + runId);
+    /**
+     * Returns an existing test run. Please see get_tests for the list of included tests in this run.
+     *
+     * @param runId The ID of the test run
+     * @return test run
+     * @throws TestRailException An error in the connection with testrail
+     * @since 0.1.0
+     */
+    public final TRRun getRun(final int runId)
+            throws TestRailException {
+        final ApiResponse apiResponse;
+        final TRRun responseObjectModel;
 
-    Map<HttpStatusCode, TestRailException> choices =
-        new HashMap<HttpStatusCode, TestRailException>() {{
-          put(HttpStatusCode.BAD_REQUEST, new InvalidOrUnknownTestRunException());
-          put(HttpStatusCode.FORBIDDEN, new NoAccessToProjectException());
-        }};
+        // Do the query
+        apiResponse = get("get_run/" + runId);
 
-    // Handle response
-    responseObjectModel = handleApiResponse(apiResponse, TRRun.class, choices);
-    return responseObjectModel;
-  }
+        Map<HttpStatusCode, TestRailException> choices =
+                new HashMap<HttpStatusCode, TestRailException>() {{
+                    put(HttpStatusCode.BAD_REQUEST, new InvalidOrUnknownTestRunException());
+                    put(HttpStatusCode.FORBIDDEN, new NoAccessToProjectException());
+                }};
+
+        // Handle response
+        responseObjectModel = handleApiResponse(apiResponse, TRRun.class, choices);
+        return responseObjectModel;
+    }
+
+    /**
+     * Returns a list of existing test runs.
+     * @param projectId Project Id
+     * @param filters filters to apply. See possible parameters: {@code = http://docs.gurock.com/testrail-api2/reference-runs#get_runs}
+     * @return
+     * @throws TestRailException
+     */
+    public final List<TRRun> getRuns(final int projectId, final Map<String, String> filters) throws TestRailException {
+        final ApiResponse apiResponse;
+        final List<TRRun> responseObjectModel;
+
+        String url = "get_runs/" + projectId;
+        if (filters != null) {
+            for (Map.Entry<String, String> entry : filters.entrySet()) {
+                url += "&" + entry.getKey() + "=" + entry.getValue();
+            }
+        }
+
+        // Do the query
+        apiResponse = get(url);
+
+        Map<HttpStatusCode, TestRailException> choices =
+                new HashMap<HttpStatusCode, TestRailException>() {
+                    {
+                        put(HttpStatusCode.BAD_REQUEST, new InvalidOrUnknownProjectException());
+                        put(HttpStatusCode.FORBIDDEN, new NoAccessToProjectException());
+                    }
+                };
+
+        // Handle response
+        responseObjectModel = handleApiResponse(apiResponse, new TypeReference<List<TRRun>>() {}, choices);
+        return responseObjectModel;
+    }
+
+    public final List<TRRun> getRunsByProjectAndMilestoneIds(final int projectId, final int milestoneId) throws TestRailException {
+        HashMap filters = new HashMap<String, String>() {
+            {
+                put(MILESTONE_ID, String.valueOf(milestoneId));
+            }
+        };
+
+        return getRuns(projectId, filters);
+    }
 }
