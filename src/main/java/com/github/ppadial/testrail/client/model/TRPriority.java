@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TRPriority {
 
   @JsonProperty("id")
-  public int id;
+  public Integer id;
   @JsonProperty("is_default")
   public Boolean isDefault;
   @JsonProperty("name")

@@ -31,7 +31,7 @@ package com.github.ppadial.testrail.client.model;
  */
 public class TRSection {
 
-  public int id;
+  public Integer id;
   public String name;
   public int depth;
   public int parent_id;

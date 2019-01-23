@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class TRCase extends CustomFieldsEntity {
 
-  public int id;
+  public Integer id;
   public String title;
   @JsonProperty("suite_id")
   public int suiteId;

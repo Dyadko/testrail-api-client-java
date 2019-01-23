@@ -67,7 +67,7 @@ public class TRResult {
    * The unique ID of the test result.
    */
   @JsonProperty("id")
-  public int id;
+  public Integer id;
   /**
    * The status of the test result, e.g. passed or failed, also see get_statuses.
    */

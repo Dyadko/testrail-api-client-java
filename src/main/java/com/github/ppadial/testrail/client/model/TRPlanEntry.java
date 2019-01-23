@@ -38,7 +38,7 @@ public class TRPlanEntry {
   @JsonProperty("suite_id")
   public int suiteId;
   public String name;
-  public List<TRRun> TRRuns;
+  public List<TRRun> runs;
   @JsonProperty("assignedto_id")
   public Integer assignedTo;
   @JsonProperty("include_all")

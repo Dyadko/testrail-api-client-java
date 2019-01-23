@@ -50,7 +50,7 @@ public class TRStatus {
   @JsonProperty("color_medium")
   public Long colorMedium;
   @JsonProperty("id")
-  public int id;
+  public Integer id;
   @JsonProperty("is_final")
   public Boolean isFinal;
   @JsonProperty("is_system")

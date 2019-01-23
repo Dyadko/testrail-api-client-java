@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class TRTest {
 
-  public int id;
+  public Integer id;
   @JsonProperty("case_id")
   public int caseId;
   @JsonProperty("statusId")

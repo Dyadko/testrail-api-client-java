@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TRTemplate {
 
   @JsonProperty("id")
-  public int id;
+  public Integer id;
   @JsonProperty("is_default")
   public Boolean is_default;
   @JsonProperty("name")

@@ -37,7 +37,7 @@ public class TRUser {
   @JsonProperty("email")
   public String email;
   @JsonProperty("id")
-  public int id;
+  public Integer id;
   @JsonProperty("is_active")
   public Boolean is_active;
   @JsonProperty("name")

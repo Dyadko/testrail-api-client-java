@@ -54,7 +54,7 @@ public class TRMilestone {
    * The unique ID of the milestone.
    */
   @JsonProperty("id")
-  public int id;
+  public Integer id;
   /**
    * True if the milestone is marked as completed and false otherwise.
    */

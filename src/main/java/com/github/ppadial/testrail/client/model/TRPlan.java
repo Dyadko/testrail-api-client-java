@@ -78,7 +78,7 @@ public class TRPlan {
    * The unique ID of the test plan.
    */
   @JsonProperty("id")
-  public int id;
+  public Integer id;
   /**
    * True if the test plan was closed and false otherwise.
    */
